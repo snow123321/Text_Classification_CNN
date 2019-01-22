@@ -12,8 +12,7 @@ Python3<br>
 cnews.vocab.txt为词汇表，字符级，大小为5000，根据频次选择的。<br>
 ## 文件说明
 data_loader.py：数据预处理文件<br>
-cnn_model_1.py：基本配置参数及方法1（多层CNN）的CNN模型文件<br>
-cnn_model_1.py：基本配置参数及方法2（不同大小卷积核结果拼接）的CNN模型文件<br>
+cnn_model.py：基本配置参数及CNN模型文件<br>
 run_CNN.py：主函数文件<br>
 
 ## CNN模型
@@ -24,12 +23,12 @@ run_CNN.py：主函数文件<br>
 * conv2：[seq_length, conv2_filters]，也就是[600,64]<br>
 * max_pooling：是在每一个feature_map维度上取最大值，最后是大小为64的一维张量<br>
 ## 结果
-
+<img src="https://github.com/snow123321/Text_Classification_CNN/blob/master/images/picture_1.png" width="400" height="350"><br>
 
 ## 学习过程中遇到的问题
 ### 1、卷积层的维度
 * 一个卷积核对应一个feature_map，一个大小为3的卷积核，若filters=100，相当于是100个不同的卷积核，对应100个feature_map。若有大小分别为[2,3,4]三种卷积核，则最后会得到300个feature_map。<br>
-* tf.layers.conv1d这个函数是在一维上取卷积，若kernel_size=3，embedding_dim=64，可以理解为是一个大小为[3,64]的卷积核。<br>
+* tf.layers.conv1d()这个函数是在一维上取卷积，若kernel_size=3，embedding_dim=64，可以理解为是一个大小为[3,64]的卷积核。<br>
 * 假设句子长度为20，卷积核数量（filters）为50，输入20\*64经过一个3\*64的卷积核卷积后得到一个20\*1的向量(padding="SAME")，因为有50个卷积核，所以最终得到50个20\*1的向量，即最后是20\*50。<br>
 ### 2、池化层
 池化层是在feature_map维度上进行池化，所以经过池化层后，一个长度为20的句子最后只有一个值，假设有100个feature_map，最后就是一个100维的向量。<br>
